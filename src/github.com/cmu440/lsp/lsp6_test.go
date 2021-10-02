@@ -185,6 +185,7 @@ func (ts *testSystem) testServerWithVariableLengthMsg(timeout int) {
 	// Last, verify that server doesn't read short messages
 	ts.t.Logf("Testing the server with a short message")
 	lspnet.SetMsgShorteningPercent(100)
+	defer lspnet.SetMsgShorteningPercent(0)
 
 	go ts.serverTryRead(SHORT, data)
 	go ts.clientSend(data)
@@ -227,6 +228,7 @@ func (ts *testSystem) testClientWithVariableLengthMsg(timeout int) {
 	// Last, verify that client doesn't read short messages
 	ts.t.Logf("Testing the client with a short message")
 	lspnet.SetMsgShorteningPercent(100)
+	defer lspnet.SetMsgShorteningPercent(0)
 
 	go ts.clientTryRead(SHORT, data)
 	go ts.serverSend(data)
